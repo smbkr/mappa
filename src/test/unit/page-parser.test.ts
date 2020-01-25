@@ -52,3 +52,14 @@ test('It parses mixed content from a page', async assert => {
   ];
   assert.deepEqual(actual.sort(), expected.sort());
 });
+
+test('It parses external assets', async assert => {
+  const imagePath = 'https://example.org/hello.jpg';
+  const pageData = `<img src="${imagePath}">`;
+
+  const parser = new PageParser();
+  const actual = await parser.getAssets(pageData);
+
+  const expected = [imagePath];
+  assert.deepEqual(actual, expected);
+});
