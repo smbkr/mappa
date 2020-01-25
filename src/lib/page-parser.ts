@@ -6,15 +6,23 @@ class PageParser {
       tag: 'img',
       attr: 'src',
     },
+    {
+      tag: 'link',
+      attr: 'href',
+    },
   ];
 
   async getAssets(pageData: string): Promise<string[]> {
     const $ = cheerio.load(pageData);
-    const assets = this.assetTypes.map(assetType => {
-      return $(assetType.tag).attr(assetType.attr);
-    });
+    const assets = this.assetTypes.reduce((parsedAssets, assetType) => {
+      $(assetType.tag).each((_, element) => {
+        parsedAssets.push($(element).attr(assetType.attr));
+      });
 
-    return Array.isArray(assets) ? assets : [assets];
+      return parsedAssets;
+    }, []);
+
+    return assets.filter(Boolean);
   }
 }
 
