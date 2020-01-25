@@ -13,6 +13,7 @@
   "author": "",
   "license": "IDGAF",
   "devDependencies": {
+    "@types/cheerio": "^0.22.15",
     "@types/node": "^13.1.8",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
@@ -26,6 +27,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3"
   }
 }
