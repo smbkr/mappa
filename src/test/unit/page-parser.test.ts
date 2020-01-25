@@ -38,6 +38,19 @@ test('It parses linked scripts in a page', async assert => {
   assert.deepEqual(actual, expected);
 });
 
+test('It ignores inline scripts', async assert => {
+  const pageData = `
+  <script>
+    window.alert('Hack The Planet!');
+  </script>
+  `;
+
+  const parser = new PageParser();
+  const actual = await parser.getAssets(pageData);
+
+  assert.deepEqual(actual, []);
+});
+
 test('It parses mixed content from a page', async assert => {
   const pageData = String(fs.readFileSync(`${fixturesPath}/example.html`));
 

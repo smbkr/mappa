@@ -20,7 +20,10 @@ class PageParser {
     const $ = cheerio.load(pageData);
     const assets = this.assetTypes.reduce((parsedAssets, assetType) => {
       $(assetType.tag).each((_, element) => {
-        parsedAssets.push($(element).attr(assetType.attr));
+        const asset = $(element).attr(assetType.attr);
+        if (asset) {
+          parsedAssets.push(asset);
+        }
       });
 
       return parsedAssets;
