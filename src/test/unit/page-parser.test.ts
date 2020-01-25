@@ -63,3 +63,14 @@ test('It parses external assets', async assert => {
   const expected = [imagePath];
   assert.deepEqual(actual, expected);
 });
+
+test('It parses the links in a page', async assert => {
+  const linkUrl = 'https://example.org/';
+  const pageData = `<a href="${linkUrl}">Hello</a>`;
+
+  const parser = new PageParser();
+  const actual = await parser.getLinks(pageData);
+
+  const expected = [linkUrl];
+  assert.deepEqual(actual, expected);
+});

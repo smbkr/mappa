@@ -28,6 +28,16 @@ class PageParser {
 
     return assets.filter(Boolean);
   }
+
+  async getLinks(pageData: string): Promise<string[]> {
+    const $ = cheerio.load(pageData);
+    const links = [];
+    $('a').each((_, element) => {
+      links.push($(element).attr('href'));
+    });
+
+    return links.filter(Boolean);
+  }
 }
 
 interface AssetType {
