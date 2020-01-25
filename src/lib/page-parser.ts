@@ -10,6 +10,10 @@ class PageParser {
       tag: 'link',
       attr: 'href',
     },
+    {
+      tag: 'script',
+      attr: 'src',
+    },
   ];
 
   async getAssets(pageData: string): Promise<string[]> {

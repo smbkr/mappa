@@ -27,6 +27,17 @@ test('It parses linked stylesheets in a page', async assert => {
   assert.deepEqual(actual, expected);
 });
 
+test('It parses linked scripts in a page', async assert => {
+  const scriptPath = '/static/main.js';
+  const pageData = `<script src="${scriptPath}"></script>`;
+
+  const parser = new PageParser();
+  const actual = await parser.getAssets(pageData);
+
+  const expected = [scriptPath];
+  assert.deepEqual(actual, expected);
+});
+
 test('It parses mixed content from a page', async assert => {
   const pageData = String(fs.readFileSync(`${fixturesPath}/example.html`));
 
@@ -37,6 +48,7 @@ test('It parses mixed content from a page', async assert => {
     '/assets/style.css',
     '/images/image-one.jpg',
     '/images/image-two.jpg',
+    '/static/main.js',
   ];
   assert.deepEqual(actual.sort(), expected.sort());
 });
