@@ -1,0 +1,2 @@
+// Foo
+console.log('foo');
