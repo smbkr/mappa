@@ -26,7 +26,7 @@ class PageParser {
       return parsedAssets;
     }, []);
 
-    return assets.filter(Boolean);
+    return assets;
   }
 
   async getLinks(pageData: string): Promise<string[]> {
@@ -36,7 +36,7 @@ class PageParser {
       links.push($(element).attr('href'));
     });
 
-    return links.filter(Boolean);
+    return links;
   }
 }
 
