@@ -29,7 +29,7 @@ class PageParser {
       return parsedAssets;
     }, []);
 
-    return assets;
+    return this.deduplicate(assets);
   }
 
   async getLinks(pageData: string): Promise<string[]> {
@@ -39,7 +39,11 @@ class PageParser {
       links.push($(element).attr('href'));
     });
 
-    return links;
+    return this.deduplicate(links);
+  }
+
+  private deduplicate<T>(array: Array<T>): Array<T> {
+    return [...new Set(array)];
   }
 }
 

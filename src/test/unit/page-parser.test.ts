@@ -87,3 +87,33 @@ test('It parses the links in a page', async assert => {
   const expected = [linkUrl];
   assert.deepEqual(actual, expected);
 });
+
+test('It de-duplicates links', async assert => {
+  const linkUrl = 'https://example.org/';
+  const pageData = `
+    <a href="${linkUrl}">Hello</a>
+    <a href="${linkUrl}">is it me</a>
+    <a href="${linkUrl}">you're looking for?</a>
+  `;
+
+  const parser = new PageParser();
+  const actual = await parser.getLinks(pageData);
+
+  const expected = [linkUrl];
+  assert.deepEqual(actual, expected);
+});
+
+test('It de-duplicates assets', async assert => {
+  const imagePath = 'hello.jpg';
+  const pageData = `
+    <img src="${imagePath}">
+    <img src="${imagePath}">
+    <img src="${imagePath}">
+  `;
+
+  const parser = new PageParser();
+  const actual = await parser.getAssets(pageData);
+
+  const expected = [imagePath];
+  assert.deepEqual(actual, expected);
+});
