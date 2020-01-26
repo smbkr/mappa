@@ -7,7 +7,7 @@ async function main() {
   let siteMap;
   try {
     siteMap = await mapper.start(startUrl);
-    console.log(siteMap);
+    console.log(JSON.stringify(siteMap, null, 2));
   } catch (err) {
     console.error(err);
   }
