@@ -34,28 +34,29 @@ class Mapper {
 
     this.siteMap[pageUrl.href] = { assets, links };
 
-    await Promise.all(this.loadRelatedLinks(links));
+
+    await Promise.all(this.loadRelatedLinks(pageUrl, links));
 
     return;
   }
 
-  private loadRelatedLinks(links: string[]): Array<Promise<void>> {
+  private loadRelatedLinks(
+    currentPage: UrlWithStringQuery,
+    links: string[],
+  ): Array<Promise<void>> {
     return links.map(link => {
-      const absoluteUrl = url.parse(
-        // Making assumptions that everyone's on https here, but it is 2020, so...
-        url.resolve(`https://${this.hostname}`, link),
-      );
-      if (this.isInternalLink(absoluteUrl)) {
+      const absoluteUrl = url.parse(url.resolve(currentPage.href, link));
+      if (
+        this.isInternalLink(absoluteUrl) &&
+        absoluteUrl.path !== currentPage.path
+      ) {
         return this.loadPage(absoluteUrl);
       }
     });
   }
 
-  private isInternalLink(parsedUrl: UrlWithStringQuery): boolean {
-    return (
-      parsedUrl.protocol.startsWith('http') && // Avoid following mailto: etc
-      parsedUrl.hostname === this.hostname
-    );
+  private isInternalLink(link: UrlWithStringQuery): boolean {
+    return link.protocol.startsWith('http') && link.hostname === this.hostname;
   }
 }
 

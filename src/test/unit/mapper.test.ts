@@ -125,3 +125,26 @@ test('creating a map for a page that links to itself', async assert => {
   const requesterCallCount = (requesterStub.get as iSpy.Spy).callCount();
   assert.equal(1, requesterCallCount, 'only requested the page once');
 });
+
+test("It doesn't follow anchor links", async assert => {
+  const parser = ({
+    getAssets: iSpy.createSpy(() => Promise.resolve([])),
+    getLinks: iSpy.createSpy(() => {
+      return Promise.resolve(['#goals']);
+    }),
+  } as any) as PageParser;
+  const mapper = new Mapper(parser, requesterStub);
+
+  const expected = {
+    'https://www.example.org/me': {
+      links: ['#goals'],
+      assets: [],
+    },
+  };
+  (requesterStub.get as iSpy.Spy).reset();
+  const actual = await mapper.start('https://www.example.org/me');
+
+  assert.deepEqual(actual, expected);
+  const requesterCallCount = (requesterStub.get as iSpy.Spy).callCount();
+  assert.equal(1, requesterCallCount, 'only requested the start page');
+});
