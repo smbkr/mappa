@@ -1,5 +1,7 @@
 # Mappa
 
+[![smbkr](https://circleci.com/gh/smbkr/mappa.svg?style=svg)](https://circleci.com/gh/smbkr/mappa)
+
 _Mappa_ is a utility written with TypeScript & Node.js, which will traverse a
 website, starting with a given url, creating a map of all static assets (images,
 scripts and stylesheets) and links (internal and external) that the page depends
