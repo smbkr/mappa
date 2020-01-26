@@ -21,6 +21,10 @@ class Mapper {
   }
 
   private async loadPage(pageUrl: UrlWithStringQuery): Promise<void> {
+    if (this.siteMap[pageUrl.href]) {
+      return;
+    }
+
     const pageData = await this.requester.get(pageUrl.href);
 
     const [assets, links] = await Promise.all([
@@ -37,17 +41,19 @@ class Mapper {
 
   private loadRelatedLinks(links: string[]): Array<Promise<void>> {
     return links.map(link => {
-      const parsed = url.parse(url.resolve(this.hostname, link));
-      if (this.isInternalLink(parsed)) {
-        // Recursively fetch related pages
-        return new Promise(() => true);
+      const absoluteUrl = url.parse(
+        // Making assumptions that everyone's on https here, but it is 2020, so...
+        url.resolve(`https://${this.hostname}`, link),
+      );
+      if (this.isInternalLink(absoluteUrl)) {
+        return this.loadPage(absoluteUrl);
       }
     });
   }
 
   private isInternalLink(parsedUrl: UrlWithStringQuery): boolean {
     return (
-      parsedUrl.protocol.startsWith('http') &&
+      parsedUrl.protocol.startsWith('http') && // Avoid following mailto: etc
       parsedUrl.hostname === this.hostname
     );
   }
