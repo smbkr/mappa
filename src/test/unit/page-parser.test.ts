@@ -52,7 +52,14 @@ test('It ignores inline scripts', async assert => {
 });
 
 test('It parses mixed content from a page', async assert => {
-  const pageData = String(fs.readFileSync(`${fixturesPath}/example.html`));
+  const pageData = `
+    <link rel="stylesheet" href="/assets/style.css" />
+    <a href="https://www.google.com">External Link</a>
+    <a href="/foo.html">Internal Link</a>
+    <img src="/images/image-one.jpg" />
+    <img src="/images/image-two.jpg" />
+    <script src="/static/main.js"></script>
+  `;
 
   const parser = new PageParser();
   const actual = await parser.getAssets(pageData);

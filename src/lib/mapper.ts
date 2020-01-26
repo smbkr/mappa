@@ -26,14 +26,12 @@ class Mapper {
     }
 
     const pageData = await this.requester.get(pageUrl.href);
-
     const [assets, links] = await Promise.all([
       this.parser.getAssets(pageData),
       this.parser.getLinks(pageData),
     ]);
 
     this.siteMap[pageUrl.href] = { assets, links };
-
 
     await Promise.all(this.loadRelatedLinks(pageUrl, links));
 
