@@ -1,25 +1,34 @@
 {
-  "name": "undacuvva",
+  "name": "mappa",
   "version": "1.0.0",
-  "description": "",
+  "description": "Crawling in my skin",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "tape 'dist/test/**/*.js' | tap-nirvana",
     "clean": "rm -rf dist",
     "build": "tsc",
-    "start": "npm run build && node dist/lib/index.js",
+    "start": "npm run build && node dist/index.js",
     "lint": "tsc --noEmit && eslint '*/**/*.ts' --quiet --fix"
   },
   "author": "",
-  "license": "IDGAF",
+  "license": "IDGAF v1.0",
   "devDependencies": {
+    "@types/cheerio": "^0.22.15",
     "@types/node": "^13.1.8",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "i-spy": "^1.0.1",
+    "nock": "^11.7.2",
     "prettier": "^1.19.1",
+    "tap-nirvana": "^1.1.0",
+    "tape-async": "^2.3.0",
     "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3"
   }
 }

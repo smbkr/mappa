@@ -1,2 +1,0 @@
-// Foo
-console.log('foo');
