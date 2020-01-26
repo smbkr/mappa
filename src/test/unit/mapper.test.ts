@@ -102,3 +102,26 @@ test('creating a map for a pair of recursive internal links', async assert => {
   const requesterCallCount = (requesterStub.get as iSpy.Spy).callCount();
   assert.equal(2, requesterCallCount, 'only requested each page once');
 });
+
+test('creating a map for a page that links to itself', async assert => {
+  const parser = ({
+    getAssets: iSpy.createSpy(() => Promise.resolve([])),
+    getLinks: iSpy.createSpy(() => {
+      return Promise.resolve(['/me']);
+    }),
+  } as any) as PageParser;
+  const mapper = new Mapper(parser, requesterStub);
+
+  const expected = {
+    'https://www.example.org/me': {
+      links: ['/me'],
+      assets: [],
+    },
+  };
+  (requesterStub.get as iSpy.Spy).reset();
+  const actual = await mapper.start('https://www.example.org/me');
+
+  assert.deepEqual(actual, expected);
+  const requesterCallCount = (requesterStub.get as iSpy.Spy).callCount();
+  assert.equal(1, requesterCallCount, 'only requested the page once');
+});
