@@ -1,4 +1,4 @@
-# Mappa
+# Mappa 🗺
 
 [![smbkr](https://circleci.com/gh/smbkr/mappa/tree/master.svg?style=svg)](https://circleci.com/gh/smbkr/mappa/tree/master)
 
@@ -7,7 +7,7 @@ website, starting with a given url, creating a map of all static assets (images,
 scripts and stylesheets) and links (internal and external) that the page depends
 on, following all internal links and crawling them also.
 
-## Building
+## Building 🏗
 
 If you have Node & NPM on your machine, build with the following:
 
@@ -17,7 +17,7 @@ npm run clean
 npm run build
 ```
 
-## Usage
+## Usage 💻
 
 After [building](#building), you can run _Mappa_ like so:
 `npm run start 'https://www.example.org'`.
@@ -38,7 +38,7 @@ to stdout. The format for the sitemap is:
 }
 ```
 
-## Testing
+## Testing ✅
 
 The following steps will create a clean build, plus lint and run the test suite:
 
@@ -49,7 +49,7 @@ npm run build
 npm run test
 ```
 
-## Caveats
+## Caveats/thoughts/etc 🤔
 
 There is not currently much in the way of error handling. If a page fetch fails
 for any reason (4xx, 5xx), that page is essentially just skipped. The utility
